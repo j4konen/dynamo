@@ -14,19 +14,23 @@ function sendData() {
   record.value = "";
   address.value = "";
 
-
-  httpMapDataAsync("/create_record", receiveCreationResponse, data);
+  httpMapDataAsync("/create_record", receiveCreationResponse, "POST", data);
 }
 
 
-function httpMapDataAsync(theUrl, callback, data = null){
+function showEdit() {
+    httpMapDataAsync("/fetch_records", receiveListingResponse, "GET");
+}
+
+
+function httpMapDataAsync(theUrl, callback, method, data = null){
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
 
   if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
     callback(xmlHttp.responseText);
   }
-  xmlHttp.open("POST", theUrl, true);
+  xmlHttp.open(method, theUrl, true);
 
   if (data != null) {
     xmlHttp.send(data);
@@ -49,9 +53,22 @@ function receiveCreationResponse(response) {
 }
 
 
-function showEdit() {
-    var recordList = document.getElementById("recordList");
-    recordList.style.display = "block";
+function receiveListingResponse(response) {
+	var responseObj = JSON.parse(response);
 
-    httpMapDataAsync("/fetch_records", receiveListingResponse, data);
+	if (responseObj["success"]) {
+        var recordList = document.getElementById("recordList");
+        recordList.style.display = "block";
+
+        var records = responseObj["records"];
+        for (var iterator in records) {
+            var listItem = document.createElement("li");
+            listItem.innerHTML = iterator + " - " + records[iterator];
+            listItem.className = "list-group-item";
+            recordList.appendChild(listItem);
+        }
+	} else {
+	    document.getElementById("error-bar").style.display = "block";
+	    document.getElementById("error-text").innerHTML = responseObj["body"];
+	}
 }

@@ -7,32 +7,48 @@ import json
 import os
 
 
-API_URL = "https://api.cloudflare.com/client/v4/zones/"
-TOKEN = os.getenv('DYNOPASS')
-DOMAIN = ".vey.cool"
-
 # Load env variables
 zone_id = os.getenv('CFZONE')
 api_key = os.getenv('CFAPI')
 auth_mail = os.getenv('CFEMAIL')
 
 
+# Define constants
+API_URL = "https://api.cloudflare.com/client/v4/zones/"
+TOKEN = os.getenv('DYNOPASS')
+DOMAIN = ".vey.cool"
+REQ_HEADER = {
+    "X-Auth-Email": auth_mail,
+    "X-Auth-Key": api_key,
+    "Content-Type": "application/json"
+    }
+
+
 # Sends a POST request to the DNS API
 # and calls it to create a new record
-def send_to_dns(sub_domain, ip):
+def api_new_dns(sub_domain, ip):
     # Define request parameters
     target = API_URL + zone_id + "/dns_records"
     request_json = '{"type": "A", "name": "' + sub_domain + DOMAIN + '", "content": "' + ip + '"}'
 
     # Make a request
     req = requests.post(target,
-                        headers={
-                            "X-Auth-Email": auth_mail,
-                            "X-Auth-Key": api_key,
-                            "Content-Type": "application/json"
-                        },
+                        headers=REQ_HEADER,
                         data=request_json
                         )
+
+    # Return the API response
+    return req.text
+
+
+# Sends a GET request to the DNS API
+# and fetches all the record data
+def api_fetch_dns():
+    # Define request parameters
+    target = API_URL + zone_id + "/dns_records"
+
+    # Make a request
+    req = requests.get(target, headers=REQ_HEADER)
 
     # Return the API response
     return req.text
@@ -73,7 +89,7 @@ def create_record():
         return json.dumps(internal_response)
 
     # Make a POST request
-    dns_response = json.loads(send_to_dns(data[0], data[1]))
+    dns_response = json.loads(api_new_dns(data[0], data[1]))
 
     # Handle errors on record creation
     if not dns_response["success"]:
@@ -85,6 +101,32 @@ def create_record():
         except IndexError:
             internal_response["body"] = "Internal server error"
         return json.dumps(internal_response)
+
+    # Return data to the frontend
+    return json.dumps(internal_response)
+
+
+# Record creation path
+@api.route('/fetch_records')
+def fetch_records():
+    # Initiate a response to the frontend
+    internal_response = {
+        "success": True,
+        "body": "",
+        "records": {}
+    }
+
+    # Make a GET request
+    dns_response = json.loads(api_fetch_dns())
+
+    # Handle errors on record creation
+    if not dns_response["success"]:
+        internal_response["success"] = False
+        internal_response["body"] = "Unable to fetch records"
+        return json.dumps(internal_response)
+
+    for record in dns_response["result"]:
+        internal_response["records"][record["name"]] = record["content"]
 
     # Return data to the frontend
     return json.dumps(internal_response)
