@@ -8,6 +8,7 @@ import os
 
 
 API_URL = "https://api.cloudflare.com/client/v4/zones/"
+TOKEN = os.getenv('DYNOPASS')
 
 
 # Sends a POST request to the DNS API
@@ -60,9 +61,14 @@ def create_record():
     }
 
     # Return error on empty fields
-    if data[0] == "" or data[1] == "":
+    if data[0] == "" or data[1] == "" or data[2] == "":
         internal_response["success"] = False
-        internal_response["body"] = "Both fields are required"
+        internal_response["body"] = "All fields are required"
+        return json.dumps(internal_response)
+
+    if data[2] != TOKEN:
+        internal_response["success"] = False
+        internal_response["body"] = "Wrong password"
         return json.dumps(internal_response)
 
     # Make a POST request

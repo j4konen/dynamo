@@ -3,11 +3,12 @@
 
 function sendData() {
   document.getElementById("success-bar").style.display = "none";
-  document.getElementById("success-bar").style.display = "none";
+  document.getElementById("error-bar").style.display = "none";
   var record = document.getElementById("record");
   var address = document.getElementById("address");
+  var password = document.getElementById("password");
 
-  var data = [record.value, address.value];
+  var data = [record.value, address.value, password.value];
   data = JSON.stringify(data);
 
   record.value = "";
