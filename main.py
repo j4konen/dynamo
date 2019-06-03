@@ -24,7 +24,11 @@ def send_to_dns(sub_domain, ip):
 
     # Make a request
     req = requests.post(target,
-                        headers={"X-Auth-Email": auth_mail, "X-Auth-Key": api_key, "Content-Type": "application/json"},
+                        headers={
+                            "X-Auth-Email": auth_mail,
+                            "X-Auth-Key": api_key,
+                            "Content-Type": "application/json"
+                        },
                         data=request_json
                         )
 
