@@ -10,23 +10,39 @@
         <span class="navbar-brand mb-0 h1">Dynamo</span>
       </nav>
       <br>
-      <div class="col-7">
-        <div class="alert alert-success alert-dismissible" style="display:none" id="success-bar">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Success!</strong> <span id="success-text"></span>
+      <div class="row">
+        <div class="col-7">
+          <div class="alert alert-success alert-dismissible" style="display:none" id="success-bar">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> <span id="success-text"></span>
+          </div>
+          <div class="alert alert-warning alert-dismissible"  style="display:none" id="error-bar">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error!</strong> <span id="error-text"></span>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="record" name="record" placeholder="A record">
+            <small class="form-text text-muted">For example, <b>sample</b>.vey.cool</small>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="address" name="address" placeholder="IPv4 address">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+          </div>
+          <button onclick="sendData()" class="btn btn-primary">Create</button>
         </div>
-        <div class="alert alert-warning alert-dismissible"  style="display:none" id="error-bar">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Error!</strong> <span id="error-text"></span>
+        <div class="col-5">
+          <div class="card" style="border:0">
+            <strong>Create a subdomain</strong>
+            <p>
+              Approved users can create subdomains using this interface.
+              <br>
+              <br>
+              Please, enter your desired suddomain and the IP address of your server.
+            </p>
+          </div>
         </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="record" name="record" placeholder="A record">
-          <small class="form-text text-muted">For example, <b>sample</b>.vey.cool</small>
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="address" name="address" placeholder="IPv4 address">
-        </div>
-        <button onclick="sendData()" class="btn btn-primary">Create</button>
       </div>
       <br>
       <script type="text/javascript" src="/static/main.js"></script>
