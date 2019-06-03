@@ -15,7 +15,7 @@ def send_to_dns(sub_domain, ip):
     auth_mail = os.getenv('CFEMAIL')
 
     target = API_URL + zone_id + "/dns_records"
-    request_json = {"type": "A", "name": sub_domain + ".vey.cool", "content": ip}
+    request_json = '{"type": "A", "name": "' + sub_domain + '.vey.cool", "content": "' + ip + '"}'
     print(request_json)
 
     req = requests.post(target,
@@ -24,9 +24,6 @@ def send_to_dns(sub_domain, ip):
                         )
 
     print(req.text)
-
-
-send_to_dns("hello", "8.8.8.8")
 
 
 # Initiate the api app
@@ -41,6 +38,8 @@ def index():
 @api.route('/create', methods=['GET', 'POST'])
 def create_record():
     data = request.get_json()
+    send_to_dns(data.record, data.address)
+
     return "Success"
 
 
