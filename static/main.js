@@ -26,7 +26,7 @@ function httpMapDataAsync(theUrl, callback, data = null){
   xmlHttp.open("POST", theUrl, true);
 
   if (data != null) {
-    xmlHttp.send("q=" + data);
+    xmlHttp.send(data);
   } else {
     xmlHttp.send(null);
   }

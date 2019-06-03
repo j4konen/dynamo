@@ -3,6 +3,7 @@
 from flask import Flask, render_template
 from flask import request
 import requests
+import json
 import os
 
 
@@ -23,7 +24,7 @@ def send_to_dns(sub_domain, ip):
                         data=request_json
                         )
 
-    print(req.text)
+    return req.text
 
 
 # Initiate the api app
@@ -37,10 +38,26 @@ def index():
 
 @api.route('/create', methods=['GET', 'POST'])
 def create_record():
-    data = request.get_json()
-    send_to_dns(data.record, data.address)
+    data = json.loads(request.data)
+    dns_response = json.loads(send_to_dns(data[0], data[1]))
 
-    return "Success"
+    internal_response = {
+        "success": True,
+        "body": ""
+    }
+
+    # Handle errors on record creation
+    if not dns_response["success"]:
+        internal_response["success"] = False
+        try:
+            internal_response["body"] = dns_response["errors"][0]["ff"]
+        except KeyError:
+            internal_response["body"]= "Internal server error"
+        except IndexError:
+            internal_response["body"] = "Internal server error"
+        return json.dumps(internal_response)
+
+    return internal_response
 
 
 if __name__ == '__main__':
