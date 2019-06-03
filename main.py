@@ -11,15 +11,15 @@ API_URL = "https://api.cloudflare.com/client/v4/zones/"
 TOKEN = os.getenv('DYNOPASS')
 DOMAIN = ".vey.cool"
 
+# Load env variables
+zone_id = os.getenv('CFZONE')
+api_key = os.getenv('CFAPI')
+auth_mail = os.getenv('CFEMAIL')
+
 
 # Sends a POST request to the DNS API
 # and calls it to create a new record
 def send_to_dns(sub_domain, ip):
-    # Load env variables
-    zone_id = os.getenv('CFZONE')
-    api_key = os.getenv('CFAPI')
-    auth_mail = os.getenv('CFEMAIL')
-
     # Define request parameters
     target = API_URL + zone_id + "/dns_records"
     request_json = '{"type": "A", "name": "' + sub_domain + DOMAIN + '", "content": "' + ip + '"}'
@@ -50,7 +50,7 @@ def index():
 
 
 # Record creation path
-@api.route('/create', methods=['GET', 'POST'])
+@api.route('/create_record', methods=['GET', 'POST'])
 def create_record():
     # Parse POST parameters
     data = json.loads(request.data)

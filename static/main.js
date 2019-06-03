@@ -15,7 +15,7 @@ function sendData() {
   address.value = "";
 
 
-  httpMapDataAsync("/create", receiveResponse, data);
+  httpMapDataAsync("/create_record", receiveCreationResponse, data);
 }
 
 
@@ -36,7 +36,7 @@ function httpMapDataAsync(theUrl, callback, data = null){
 }
 
 
-function receiveResponse(response) {
+function receiveCreationResponse(response) {
 	var responseObj = JSON.parse(response);
 
 	if (responseObj["success"]) {
@@ -46,4 +46,12 @@ function receiveResponse(response) {
 	    document.getElementById("error-bar").style.display = "block";
 	    document.getElementById("error-text").innerHTML = responseObj["body"];
 	}
+}
+
+
+function showEdit() {
+    var recordList = document.getElementById("recordList");
+    recordList.style.display = "block";
+
+    httpMapDataAsync("/fetch_records", receiveListingResponse, data);
 }

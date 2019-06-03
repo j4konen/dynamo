@@ -5,57 +5,75 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   </head>
   <body>
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <span class="navbar-brand mb-0 h1">Dynamo</span>
-      </nav>
-      <br>
-      <div class="row">
-        <div class="col-7">
-          <div class="alert alert-success alert-dismissible" style="display:none" id="success-bar">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success!</strong> <span id="success-text"></span>
+  <br>
+    <div class="container" style="max-width:700px">
+      <div class="card">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <span class="navbar-text">
+            Dynamo - New subdomain
+          </span>
+        </nav>
+        <br>
+        <div class="container" style="max-width:660px">
+          <div class="row">
+            <div class="col-7">
+              <div class="alert alert-success alert-dismissible" style="display:none" id="success-bar">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success!</strong> <span id="success-text"></span>
+              </div>
+              <div class="alert alert-warning alert-dismissible"  style="display:none" id="error-bar">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Error!</strong> <span id="error-text"></span>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="record" name="record" placeholder="A record">
+                <small class="form-text text-muted">For example, <b>sample</b>.vey.cool</small>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="address" name="address" placeholder="IPv4 address">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+              </div>
+              <button onclick="sendData()" class="btn btn-primary">Create</button>
+              <button onclick="showEdit()" class="btn btn-outline-dark">Edit records</button>
+            </div>
+            <div class="col-5">
+              <div class="card" style="border:0">
+                <p>
+                  Approved users can create subdomains using this interface.
+                  <br>
+                  <br>
+                  Please, enter your desired suddomain and the IP address of your server.
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="alert alert-warning alert-dismissible"  style="display:none" id="error-bar">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Error!</strong> <span id="error-text"></span>
+          <div class="row" style="display:none" id="recordList">
+            <br>
+            <div class="col-12">
+              <ul class="list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+              </ul>
+            </div>
           </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="record" name="record" placeholder="A record">
-            <small class="form-text text-muted">For example, <b>sample</b>.vey.cool</small>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="address" name="address" placeholder="IPv4 address">
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-          </div>
-          <button onclick="sendData()" class="btn btn-primary">Create</button>
         </div>
-        <div class="col-5">
-          <div class="card" style="border:0">
-            <strong>Create a subdomain</strong>
-            <p>
-              Approved users can create subdomains using this interface.
-              <br>
-              <br>
-              Please, enter your desired suddomain and the IP address of your server.
-            </p>
-          </div>
-        </div>
-      </div>
-      <br>
-      <script type="text/javascript" src="/static/main.js"></script>
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-      <div class="row text-center">
-        <footer class="mastfoot mt-auto">
-          <div class="inner text-center">
-            <p>Made by <a href="https://github.com/jakonen">@jakonen</a>.</p>
-          </div>
-        </footer>
+        <br>
       </div>
     </div>
+    <br>
+    <footer class="mastfoot mt-auto">
+      <div class="inner text-center">
+        <p>Made by <a href="https://github.com/jakonen">@jakonen</a></p>
+      </div>
+    </footer>
+    <script type="text/javascript" src="/static/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   </body>
 </html>
