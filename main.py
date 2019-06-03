@@ -9,6 +9,7 @@ import os
 
 API_URL = "https://api.cloudflare.com/client/v4/zones/"
 TOKEN = os.getenv('DYNOPASS')
+DOMAIN = ".vey.cool"
 
 
 # Sends a POST request to the DNS API
@@ -21,7 +22,7 @@ def send_to_dns(sub_domain, ip):
 
     # Define request parameters
     target = API_URL + zone_id + "/dns_records"
-    request_json = '{"type": "A", "name": "' + sub_domain + '.vey.cool", "content": "' + ip + '"}'
+    request_json = '{"type": "A", "name": "' + sub_domain + DOMAIN + '", "content": "' + ip + '"}'
 
     # Make a request
     req = requests.post(target,
