@@ -5,6 +5,13 @@ from flask import request
 import requests
 
 
+API_URL = "https://api.namecheap.com/xml.response"
+
+
+def send_to_dns():
+    print(0)
+
+
 # Initiate the api app
 api = Flask(__name__)
 
