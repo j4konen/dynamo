@@ -56,7 +56,7 @@ def create_record():
     # Initiate a response to the frontend
     internal_response = {
         "success": True,
-        "body": ""
+        "body": "New DNS record created"
     }
 
     # Return error on empty fields
@@ -80,7 +80,7 @@ def create_record():
         return json.dumps(internal_response)
 
     # Return data to the frontend
-    return internal_response
+    return json.dumps(internal_response)
 
 
 if __name__ == '__main__':

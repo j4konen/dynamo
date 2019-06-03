@@ -2,6 +2,8 @@
 // jakonen@github
 
 function sendData() {
+  document.getElementById("success-bar").style.display = "none";
+  document.getElementById("success-bar").style.display = "none";
   var record = document.getElementById("record");
   var address = document.getElementById("address");
 
@@ -34,5 +36,13 @@ function httpMapDataAsync(theUrl, callback, data = null){
 
 
 function receiveResponse(response) {
-	console.log(response);
+	var responseObj = JSON.parse(response);
+
+	if (responseObj["success"]) {
+	    document.getElementById("success-bar").style.display = "block";
+	    document.getElementById("success-text").innerHTML = responseObj["body"];
+	} else {
+	    document.getElementById("error-bar").style.display = "block";
+	    document.getElementById("error-text").innerHTML = responseObj["body"];
+	}
 }

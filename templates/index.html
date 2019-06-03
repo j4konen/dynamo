@@ -7,14 +7,14 @@
   <body>
     <br>
     <div class="container">
-      <div class="alert alert-success alert-dismissible" style="display:none">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Success!</strong> <p id="success-notification"></p>
-        </div>
-        <div class="alert alert-warning alert-dismissible"  style="display:none">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Error!</strong> <p id="error-notification"></p>
-        </div>
+      <div class="alert alert-success alert-dismissible" style="display:none" id="success-bar">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> <span id="success-text"></span>
+      </div>
+      <div class="alert alert-warning alert-dismissible"  style="display:none" id="error-bar">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error!</strong> <span id="error-text"></span>
+    </div>
       <div class="col-5">
         <div class="form-group">
           <input type="text" class="form-control" id="record" name="record" placeholder="A record">
