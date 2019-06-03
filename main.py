@@ -16,7 +16,8 @@ def index():
 
 @api.route('/create', methods=['GET', 'POST'])
 def create():
-    return 1
+    data = request.get_json()
+    print(data)
 
 
 if __name__ == '__main__':
