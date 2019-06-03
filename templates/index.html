@@ -16,7 +16,7 @@
         <br>
         <div class="container" style="max-width:660px">
           <div class="row">
-            <div class="col-7">
+            <div class="col-6">
               <div class="alert alert-success alert-dismissible" style="display:none" id="success-bar">
                 <strong>Success!</strong> <span id="success-text"></span>
               </div>
@@ -33,16 +33,19 @@
               <div class="form-group">
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
               </div>
-              <button onclick="sendData()" class="btn btn-primary">Create</button>
-              <button onclick="showEdit()" class="btn btn-outline-dark" id="edit-btn">Edit records</button>
+              <button onclick="sendData()" class="btn btn-primary">New record</button>
+              <button onclick="showEdit()" class="btn btn-outline-dark" id="edit-btn">List records</button>
             </div>
-            <div class="col-5">
+            <div class="col-6">
               <div class="card" style="border:0">
                 <p>
-                  Approved users can create subdomains using this interface.
+                  Approved users can create and remove subdomains using this interface.
                   <br>
                   <br>
-                  Please, enter your desired suddomain and the IP address of your server.
+                  Please, enter your desired subdomain and the IP address of your server.
+                  <br>
+                  <br>
+                  Contact the admin for the password.
                 </p>
               </div>
             </div>
