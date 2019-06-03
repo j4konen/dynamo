@@ -5,7 +5,7 @@ from flask import request
 import requests
 
 
-API_URL = "https://api.namecheap.com/xml.response"
+API_URL = "https://api.cloudflare.com/client/v4/zones/"
 
 
 def send_to_dns():
