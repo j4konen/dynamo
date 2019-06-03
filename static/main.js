@@ -57,7 +57,9 @@ function receiveListingResponse(response) {
 	var responseObj = JSON.parse(response);
 
 	if (responseObj["success"]) {
+	    var editButton = document.getElementById("edit-btn");
         var recordList = document.getElementById("recordList");
+        editButton.disabled = true;
         recordList.style.display = "block";
 
         var records = responseObj["records"];
