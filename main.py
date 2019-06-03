@@ -68,9 +68,9 @@ def create_record():
     if not dns_response["success"]:
         internal_response["success"] = False
         try:
-            internal_response["body"] = dns_response["errors"][0]["ff"]
+            internal_response["body"] = dns_response["errors"][0]["message"]
         except KeyError:
-            internal_response["body"]= "Internal server error"
+            internal_response["body"] = "Internal server error"
         except IndexError:
             internal_response["body"] = "Internal server error"
         return json.dumps(internal_response)
