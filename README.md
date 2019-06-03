@@ -2,6 +2,8 @@
 Interface for creating DNS records on your own website.  
 Currently works just with Cloudflare.
 
+![](https://i.imgur.com/pgih9b8.png)
+
 ## Usage
 
 ### Depedencies

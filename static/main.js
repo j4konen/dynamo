@@ -19,6 +19,9 @@ function sendData() {
 
 
 function showEdit() {
+    document.getElementById("success-bar").style.display = "none";
+    document.getElementById("error-bar").style.display = "none";
+
     httpMapDataAsync("/fetch_records", receiveListingResponse, "GET");
 }
 
