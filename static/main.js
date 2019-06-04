@@ -68,8 +68,25 @@ function receiveListingResponse(response) {
         var records = responseObj["records"];
         for (var iterator in records) {
             var listItem = document.createElement("li");
-            listItem.innerHTML = iterator + " - " + records[iterator];
+            var listRow = document.createElement("div");
+            var listBlockLeft = document.createElement("div");
+            var listBlockRight = document.createElement("div");
+            var listBlockActions = document.createElement("div");
+
             listItem.className = "list-group-item";
+            listRow.className = "container d-inline-flex w-100 ml-2";
+            listBlockLeft.className = "col-5";
+            listBlockRight.className = "col-5";
+            listBlockActions.className = "col-2";
+
+            listBlockLeft.innerHTML = iterator;
+            listBlockRight.innerHTML = records[iterator];
+            listBlockActions.innerHTML = "DEL";
+
+            listRow.appendChild(listBlockLeft);
+            listRow.appendChild(listBlockRight);
+            listRow.appendChild(listBlockActions);
+            listItem.appendChild(listRow);
             recordList.appendChild(listItem);
         }
 	} else {
