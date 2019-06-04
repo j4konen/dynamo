@@ -75,14 +75,14 @@ function receiveListingResponse(response) {
 
             listItem.className = "list-group-item";
             listRow.className = "container d-inline-flex w-100 ml-2";
-            listBlockLeft.className = "col-5";
-            listBlockRight.className = "col-5";
-            listBlockActions.className = "col-2";
+            listBlockLeft.className = "col-4";
+            listBlockRight.className = "col-7";
+            listBlockActions.className = "col-1";
 
             listBlockLeft.innerHTML = iterator;
             listBlockRight.innerHTML = records[iterator];
-            listBlockActions.innerHTML = "DEL";
-
+            listBlockActions.innerHTML = '<img width=16 src="/static/trash.svg">';
+                                                  // https://useiconic.com/open/
             listRow.appendChild(listBlockLeft);
             listRow.appendChild(listBlockRight);
             listRow.appendChild(listBlockActions);
