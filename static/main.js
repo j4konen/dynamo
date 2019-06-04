@@ -26,6 +26,11 @@ function showEdit() {
 }
 
 
+function dropRecord(name) {
+
+}
+
+
 function httpMapDataAsync(theUrl, callback, method, data = null){
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
@@ -80,9 +85,10 @@ function receiveListingResponse(response) {
             listBlockActions.className = "col-1";
 
             listBlockLeft.innerHTML = iterator;
-            listBlockRight.innerHTML = records[iterator];
-            listBlockActions.innerHTML = '<img width=16 src="/static/trash.svg">';
-                                                  // https://useiconic.com/open/
+            listBlockRight.innerHTML = records[iterator];                          // https://useiconic.com/open/
+            var deletionButton = '<img onclick="dropRecord(\'' + iterator + '\')" width=16 src="/static/trash.svg">';
+            listBlockActions.innerHTML = deletionButton;
+
             listRow.appendChild(listBlockLeft);
             listRow.appendChild(listBlockRight);
             listRow.appendChild(listBlockActions);
