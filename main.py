@@ -54,6 +54,21 @@ def api_fetch_dns():
     return req.text
 
 
+# Sends a DELETE request to the DNS API
+# and calls it to delete a specific record
+def api_drop_dns(record_id):
+    # Define request parameters
+    target = API_URL + zone_id + "/dns_records/" + record_id
+
+    # Make a request
+    req = requests.delete(target,
+                          headers=REQ_HEADER
+                          )
+
+    # Return the API response
+    return req.text
+
+
 # Initiate the api app
 api = Flask(__name__)
 
@@ -126,7 +141,37 @@ def fetch_records():
         return json.dumps(internal_response)
 
     for record in dns_response["result"]:
-        internal_response["records"][record["name"]] = record["content"]
+        internal_response["records"][record["name"]] = [record["content"], record["id"]]
+
+    # Return data to the frontend
+    return json.dumps(internal_response)
+
+
+# Record deletion path
+@api.route('/drop_record', methods=['GET', 'POST'])
+def drop_record():
+    # Parse POST parameters
+    data = request.data.decode("utf-8")
+
+    # Initiate a response to the frontend
+    internal_response = {
+        "success": True,
+        "body": "Record successfully removed"
+    }
+
+    # Make a DELETE request
+    dns_response = json.loads(api_drop_dns(data))
+
+    # Handle errors on record creation
+    if not dns_response["success"]:
+        internal_response["success"] = False
+        try:
+            internal_response["body"] = dns_response["errors"][0]["message"]
+        except KeyError:
+            internal_response["body"] = "Internal server error"
+        except IndexError:
+            internal_response["body"] = "Internal server error"
+        return json.dumps(internal_response)
 
     # Return data to the frontend
     return json.dumps(internal_response)

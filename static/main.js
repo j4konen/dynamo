@@ -18,16 +18,20 @@ function sendData() {
 }
 
 
-function showEdit() {
-    document.getElementById("success-bar").style.display = "none";
-    document.getElementById("error-bar").style.display = "none";
+function showEdit(emptyBanners = true) {
+
+    if (emptyBanners) {
+        document.getElementById("success-bar").style.display = "none";
+        document.getElementById("error-bar").style.display = "none";
+    }
 
     httpMapDataAsync("/fetch_records", receiveListingResponse, "GET");
 }
 
 
-function dropRecord(name) {
-
+function dropRecord(recordId) {
+    var data = [recordId];
+    httpMapDataAsync("/drop_record", receiveDeletionResponse, "POST", data);
 }
 
 
@@ -72,6 +76,9 @@ function receiveListingResponse(response) {
 
         var records = responseObj["records"];
         for (var iterator in records) {
+            var ip = records[iterator][0];
+            var id = records[iterator][1];
+
             var listItem = document.createElement("li");
             var listRow = document.createElement("div");
             var listBlockLeft = document.createElement("div");
@@ -85,8 +92,8 @@ function receiveListingResponse(response) {
             listBlockActions.className = "col-1";
 
             listBlockLeft.innerHTML = iterator;
-            listBlockRight.innerHTML = records[iterator];                          // https://useiconic.com/open/
-            var deletionButton = '<img onclick="dropRecord(\'' + iterator + '\')" width=16 src="/static/trash.svg">';
+            listBlockRight.innerHTML = ip;                                       // https://useiconic.com/open/
+            var deletionButton = '<img onclick="dropRecord(\'' + id + '\')" width=16 src="/static/trash.svg">';
             listBlockActions.innerHTML = deletionButton;
 
             listRow.appendChild(listBlockLeft);
@@ -95,6 +102,22 @@ function receiveListingResponse(response) {
             listItem.appendChild(listRow);
             recordList.appendChild(listItem);
         }
+	} else {
+	    document.getElementById("error-bar").style.display = "block";
+	    document.getElementById("error-text").innerHTML = responseObj["body"];
+	}
+}
+
+
+function receiveDeletionResponse(response) {
+	var responseObj = JSON.parse(response);
+
+	if (responseObj["success"]) {
+	    document.getElementById("success-bar").style.display = "block";
+	    document.getElementById("success-text").innerHTML = responseObj["body"];
+
+        document.getElementById("recordList").innerHTML = "<br>";
+	    showEdit(false);
 	} else {
 	    document.getElementById("error-bar").style.display = "block";
 	    document.getElementById("error-text").innerHTML = responseObj["body"];
