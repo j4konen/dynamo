@@ -1,5 +1,14 @@
-# Dynamo
-# jakonen@github
+#      _       _        
+#  ___ (_) __ _| | _____  sjaks@github
+# / __|| |/ _` | |/ / __| s.jaks.fi
+# \__ \| | (_| |   <\__ \ ------------
+# |___// |\__,_|_|\_\___/ dynamo
+#    |__/                
+#
+# BRIEF:
+# Main backend for dynamo
+
+
 from flask import Flask, render_template
 from flask import request
 import requests
@@ -7,10 +16,12 @@ import json
 import os
 
 
+
 # Load env variables
 zone_id = os.getenv('CFZONE')
 api_key = os.getenv('CFAPI')
 auth_mail = os.getenv('CFEMAIL')
+
 
 
 # Define constants
@@ -22,6 +33,7 @@ REQ_HEADER = {
     "X-Auth-Key": api_key,
     "Content-Type": "application/json"
     }
+
 
 
 # Sends a POST request to the DNS API
@@ -41,6 +53,7 @@ def api_new_dns(sub_domain, ip):
     return req.text
 
 
+
 # Sends a GET request to the DNS API
 # and fetches all the record data
 def api_fetch_dns():
@@ -51,7 +64,8 @@ def api_fetch_dns():
     req = requests.get(target, headers=REQ_HEADER)
 
     # Return the API response
-    return req.text
+     return req.text
+
 
 
 # Sends a DELETE request to the DNS API
@@ -66,11 +80,13 @@ def api_drop_dns(record_id):
                           )
 
     # Return the API response
-    return req.text
+     return req.text
+
 
 
 # Initiate the api app
 api = Flask(__name__)
+
 
 
 # Root path
@@ -78,6 +94,7 @@ api = Flask(__name__)
 def index():
     # Print index.html
     return render_template("index.html")
+
 
 
 # Record creation path
@@ -121,6 +138,7 @@ def create_record():
     return json.dumps(internal_response)
 
 
+
 # Record creation path
 @api.route('/fetch_records')
 def fetch_records():
@@ -145,6 +163,7 @@ def fetch_records():
 
     # Return data to the frontend
     return json.dumps(internal_response)
+
 
 
 # Record deletion path
@@ -174,8 +193,9 @@ def drop_record():
         return json.dumps(internal_response)
 
     # Return data to the frontend
-    return json.dumps(internal_response)
+     return json.dumps(internal_response)
 
 
-if __name__ == '__main__':
+
+ if __name__ == '__main__':
     api.run(port=8003)

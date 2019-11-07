@@ -1,5 +1,13 @@
-// Dynamo
-// jakonen@github
+//      _       _        
+//  ___ (_) __ _| | _____  sjaks@github
+// / __|| |/ _` | |/ / __| s.jaks.fi
+// \__ \| | (_| |   <\__ \ ------------
+// |___// |\__,_|_|\_\___/ dynamo
+//    |__/                
+//
+// BRIEF:
+// Main Javascript file for dynamo
+
 
 function sendData() {
   document.getElementById("success-bar").style.display = "none";
