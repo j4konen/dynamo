@@ -82,12 +82,19 @@ function receiveCreationResponse(response) {
 
 
 function receiveListingResponse(response) {
-	var responseObj = JSON.parse(response);
+  var responseObj = JSON.parse(response);
+  var editButton = document.getElementById("edit-btn");
+  editButton.disabled = true;
 
 	if (responseObj["success"]) {
-	    var editButton = document.getElementById("edit-btn");
+        if (Object.keys(responseObj["records"]).length < 1) {
+            var recordList = document.getElementById("recordList");
+            recordList.style.display = "block";
+            recordList.innerHTML = "<br> No records.";
+            return;
+        }
+
         var recordList = document.getElementById("recordList");
-        editButton.disabled = true;
         recordList.style.display = "block";
 
         var records = responseObj["records"];
