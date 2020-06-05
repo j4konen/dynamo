@@ -17,20 +17,15 @@ import os
 
 
 
-# Load env variables
-zone_id = os.getenv('CFZONE')
-api_key = os.getenv('CFAPI')
-auth_mail = os.getenv('CFEMAIL')
-
-
-
 # Define constants
+USER_DOMAIN = os.getenv('CFDOMAIN')
 API_URL = "https://api.cloudflare.com/client/v4/zones/"
+ZONE_ID = os.getenv('CFZONE')
 TOKEN = os.getenv('DYNOPASS')
-DOMAIN = ".vey.cool"
+DOMAIN = "." + USER_DOMAIN
 REQ_HEADER = {
-    "X-Auth-Email": auth_mail,
-    "X-Auth-Key": api_key,
+    "X-Auth-Email": os.getenv('CFEMAIL'),
+    "X-Auth-Key": os.getenv('CFAPI'),
     "Content-Type": "application/json"
     }
 
@@ -40,7 +35,7 @@ REQ_HEADER = {
 # and calls it to create a new record
 def api_new_dns(sub_domain, ip):
     # Define request parameters
-    target = API_URL + zone_id + "/dns_records"
+    target = API_URL + ZONE_ID + "/dns_records"
     request_json = '{"type": "A", "name": "' + sub_domain + DOMAIN + '", "content": "' + ip + '"}'
 
     # Make a request
@@ -58,13 +53,13 @@ def api_new_dns(sub_domain, ip):
 # and fetches all the record data
 def api_fetch_dns():
     # Define request parameters
-    target = API_URL + zone_id + "/dns_records"
+    target = API_URL + ZONE_ID + "/dns_records"
 
     # Make a request
     req = requests.get(target, headers=REQ_HEADER)
 
     # Return the API response
-     return req.text
+    return req.text
 
 
 
@@ -72,7 +67,7 @@ def api_fetch_dns():
 # and calls it to delete a specific record
 def api_drop_dns(record_id):
     # Define request parameters
-    target = API_URL + zone_id + "/dns_records/" + record_id
+    target = API_URL + ZONE_ID + "/dns_records/" + record_id
 
     # Make a request
     req = requests.delete(target,
@@ -80,7 +75,7 @@ def api_drop_dns(record_id):
                           )
 
     # Return the API response
-     return req.text
+    return req.text
 
 
 
@@ -193,9 +188,16 @@ def drop_record():
         return json.dumps(internal_response)
 
     # Return data to the frontend
-     return json.dumps(internal_response)
+    return json.dumps(internal_response)
 
 
 
- if __name__ == '__main__':
+# Domain query path
+@api.route('/domain_query', methods=['GET'])
+def domain_query():
+    return USER_DOMAIN
+
+
+
+if __name__ == '__main__':
     api.run(port=8003)

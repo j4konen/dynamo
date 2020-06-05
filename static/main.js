@@ -9,6 +9,14 @@
 // Main Javascript file for dynamo
 
 
+function showDomainOnFrontEnd() {
+  httpMapDataAsync("/domain_query", function(response) {
+    document.getElementById("recordExample").innerHTML = "For example, <b>sample</b>." + response;
+    document.getElementById("domainTitle").innerHTML = response;
+  }, "GET");
+}
+
+
 function sendData() {
   document.getElementById("success-bar").style.display = "none";
   document.getElementById("error-bar").style.display = "none";
@@ -131,3 +139,5 @@ function receiveDeletionResponse(response) {
 	    document.getElementById("error-text").innerHTML = responseObj["body"];
 	}
 }
+
+showDomainOnFrontEnd()
