@@ -1,6 +1,6 @@
 #      _       _        
 #  ___ (_) __ _| | _____  sjaks@github
-# / __|| |/ _` | |/ / __| s.jaks.fi
+# / __|| |/ _` | |/ / __| jaks.fi
 # \__ \| | (_| |   <\__ \ ------------
 # |___// |\__,_|_|\_\___/ dynamo
 #    |__/                
@@ -92,7 +92,7 @@ def index():
 
 
 
-# Record creation path
+# Record creation path (TOKEN REQUIRED)
 @api.route('/create_record', methods=['GET', 'POST'])
 def create_record():
     # Parse POST parameters
@@ -134,15 +134,23 @@ def create_record():
 
 
 
-# Record creation path
-@api.route('/fetch_records')
+# Record fetch path (TOKEN REQUIRED)
+@api.route('/fetch_records', methods=['GET', 'POST'])
 def fetch_records():
+    # Parse POST parameters
+    data = json.loads(request.data)
+
     # Initiate a response to the frontend
     internal_response = {
         "success": True,
         "body": "",
         "records": {}
     }
+
+    if data[0] != TOKEN:
+        internal_response["success"] = False
+        internal_response["body"] = "Wrong password"
+        return json.dumps(internal_response)
 
     # Make a GET request
     dns_response = json.loads(api_fetch_dns())
@@ -161,11 +169,12 @@ def fetch_records():
 
 
 
-# Record deletion path
+# Record deletion path (TOKEN REQUIRED)
 @api.route('/drop_record', methods=['GET', 'POST'])
 def drop_record():
     # Parse POST parameters
-    data = request.data.decode("utf-8")
+    data = json.loads(request.data)
+
 
     # Initiate a response to the frontend
     internal_response = {
@@ -173,8 +182,13 @@ def drop_record():
         "body": "Record successfully removed"
     }
 
+    if data[1] != TOKEN:
+        internal_response["success"] = False
+        internal_response["body"] = "Wrong password"
+        return json.dumps(internal_response)
+
     # Make a DELETE request
-    dns_response = json.loads(api_drop_dns(data))
+    dns_response = json.loads(api_drop_dns(data[0]))
 
     # Handle errors on record creation
     if not dns_response["success"]:

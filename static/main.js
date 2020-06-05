@@ -1,6 +1,6 @@
 //      _       _        
 //  ___ (_) __ _| | _____  sjaks@github
-// / __|| |/ _` | |/ / __| s.jaks.fi
+// / __|| |/ _` | |/ / __| jaks.fi
 // \__ \| | (_| |   <\__ \ ------------
 // |___// |\__,_|_|\_\___/ dynamo
 //    |__/                
@@ -41,12 +41,19 @@ function showEdit(emptyBanners = true) {
         document.getElementById("error-bar").style.display = "none";
     }
 
-    httpMapDataAsync("/fetch_records", receiveListingResponse, "GET");
+    var password = document.getElementById("password");
+    var data = [password.value];
+    data = JSON.stringify(data);
+
+    httpMapDataAsync("/fetch_records", receiveListingResponse, "POST", data);
 }
 
 
 function dropRecord(recordId) {
-    var data = [recordId];
+    var password = document.getElementById("password");
+    var data = [recordId, password.value];
+    data = JSON.stringify(data);
+    console.log(data)
     httpMapDataAsync("/drop_record", receiveDeletionResponse, "POST", data);
 }
 
