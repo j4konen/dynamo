@@ -18,11 +18,11 @@ docker build -t dynamo .
 2. Edit the `.env` file. Edit in your desired Dynamo password and information from CloudFlare.
 ```
 $ nano .env
-CFAPI=0000000000000000000000000000000000000
-CFZONE=00000000000000000000000000000000
-CFDOMAIN=example.com
-CFEMAIL=email@example.com
-DYNOPASS=password
+CFAPI=
+CFZONE=
+CFDOMAIN=
+CFEMAIL=
+DYNOPASS=
 ```
 3. Start a container based on your new Dynamo image.
 ```
@@ -33,33 +33,32 @@ docker run --name dynamo --env-file .env -p 8003:8003 --rm dynamo
 http://localhost:8003
 ```
 
-### Without Docker
-
-#### Depedencies
-If you don't want to use Docker, install the depedencies by executing
-```
-pip3 install flask requests
-```
-
-#### Env variables
-You have to set the following environmental variables on your server.
+### Env variables
+Dynamo uses the following environmental variables.
 * CFAPI - Cloudflare API key
 * CFZONE - DNS zone ID
 * CFDOMAIN - Your domain on CloudFlare
 * CFEMAIL - Cloudflare account email
 * DYNOPASS - Custom dynamo password
 
-Set them on your server:
-```
-export CFAPI='0000000000000000000000000000000000000'
-export CFZONE='00000000000000000000000000000000'
-export CFDOMAIN='example.com'
-export CFEMAIL='email@example.com'
-export DYNOPASS='password'
-```
+### HTTPS and port 80
+Dynamo runs by default on port `8003`. The Docker configuration reveals that port and you can access the dashboard at `http://localhost:8003`.
+The Docker image can be used for production but usually you may want to enable HTTPS and serve the dashboard on port `80`.
 
-#### Running
-Execute the python file with `python3 main.py`. If you are using this in a production setting, disable dev mode and use Apache2 or Nginx to proxy traffic to Dynamo's port 8003. Be sure to use a strong DYNOPASS password.
+You will need to setup a proxy with either Nginx or Apache 2 to point traffic from port `80` to Dynamo's port `8003`.
+By doing this, you can also issue a SSL/TLS certificate on your site and enable HTTPS.
+
+#### Example Nginx configuration
+```
+server {
+    listen 80;
+    ...
+    location / {
+        proxy_pass http://127.0.0.1:8003;
+    }
+    ...
+}
+```
 
 ## Links
 Read about CloudFlare API: https://api.cloudflare.com/
