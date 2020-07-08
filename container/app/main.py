@@ -80,12 +80,12 @@ def api_drop_dns(record_id):
 
 
 # Initiate the api app
-api = Flask(__name__)
+app = Flask(__name__)
 
 
 
 # Root path
-@api.route('/')
+@app.route('/')
 def index():
     # Print index.html
     return render_template("index.html")
@@ -93,7 +93,7 @@ def index():
 
 
 # Record creation path (TOKEN REQUIRED)
-@api.route('/create_record', methods=['GET', 'POST'])
+@app.route('/create_record', methods=['GET', 'POST'])
 def create_record():
     # Parse POST parameters
     data = json.loads(request.data)
@@ -135,7 +135,7 @@ def create_record():
 
 
 # Record fetch path (TOKEN REQUIRED)
-@api.route('/fetch_records', methods=['GET', 'POST'])
+@app.route('/fetch_records', methods=['GET', 'POST'])
 def fetch_records():
     # Parse POST parameters
     data = json.loads(request.data)
@@ -170,7 +170,7 @@ def fetch_records():
 
 
 # Record deletion path (TOKEN REQUIRED)
-@api.route('/drop_record', methods=['GET', 'POST'])
+@app.route('/drop_record', methods=['GET', 'POST'])
 def drop_record():
     # Parse POST parameters
     data = json.loads(request.data)
@@ -207,11 +207,11 @@ def drop_record():
 
 
 # Domain query path
-@api.route('/domain_query', methods=['GET'])
+@app.route('/domain_query', methods=['GET'])
 def domain_query():
     return USER_DOMAIN
 
 
 
 if __name__ == '__main__':
-    api.run(port=8003)
+    app.run(host='0.0.0.0', port=8003)
