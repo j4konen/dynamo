@@ -41,11 +41,11 @@ Dynamo uses the following environmental variables.
 * CFEMAIL - Cloudflare account email
 * DYNOPASS - Custom dynamo password
 
-### HTTPS and port 80
+### HTTPS and ports 80/443
 Dynamo runs by default on port `8003`. The Docker configuration reveals that port and you can access the dashboard at `http://localhost:8003`.
-The Docker image can be used for production but usually you may want to enable HTTPS and serve the dashboard on port `80`.
+The Docker image can be used for production but usually you may want to enable HTTPS and serve the dashboard on port `80` (or `443` for TLS).
 
-You will need to setup a proxy with either Nginx or Apache 2 to point traffic from port `80` to Dynamo's port `8003`.
+You will need to setup a proxy with either Nginx or Apache 2 to point traffic from ports `80` and `443` to Dynamo's port `8003`.
 By doing this, you can also issue a SSL/TLS certificate on your site and enable HTTPS.
 
 #### Example Nginx configuration
