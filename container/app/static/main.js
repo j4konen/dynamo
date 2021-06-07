@@ -1,12 +1,7 @@
-//      _       _        
-//  ___ (_) __ _| | _____  sjaks@github
-// / __|| |/ _` | |/ / __| jaks.fi
-// \__ \| | (_| |   <\__ \ ------------
-// |___// |\__,_|_|\_\___/ dynamo
-//    |__/                
-//
-// BRIEF:
-// Main Javascript file for dynamo
+/*
+dynamo: DNS record manager
+sjaks@github.com
+*/
 
 
 function showDomainOnFrontEnd() {
